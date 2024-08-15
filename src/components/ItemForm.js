@@ -1,11 +1,26 @@
 import React, { useState } from "react";
 
-function ItemForm() {
+function ItemForm({ onAddItem }) {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("Produce");
 
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const newItem = {
+      id: Math.random().toString(36).substr(2, 9),  // Generates a random ID
+      name: name,
+      category: category,
+      isInCart: false,
+    };
+
+    onAddItem(newItem);
+    setName("");
+    setCategory("Produce");
+  }
+
   return (
-    <form className="NewItem">
+    <form className="NewItem" onSubmit={handleSubmit}>
       <label>
         Name:
         <input
